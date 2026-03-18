@@ -1,0 +1,59 @@
+{% extends "book/base.html" %}
+
+<title>{% block title %}Books{% endblock title %}</title>
+
+{% block content %}
+{% if messages %}
+        {% for messages in messages %}
+        <div class="alert alert-{{messages.tags}} alert-dismissible fade show">
+            {{messages}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+{% endif %}
+<div class="container mt-5 border p-4 rounded">
+    <h3 class="mb-4">Book List</h3>
+
+    <div class="row">
+
+        {% if li %}
+            {% for book in li %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+
+                        <!-- Title -->
+                        <h5 class="card-title">
+                            {{ book.title}}
+                        </h5>
+
+                        <!-- Author -->
+                        <p class="text-muted mb-1">
+                            <strong>Author:</strong> {{ book.author }}
+                        </p>
+
+                        <!-- Description -->
+                        <p class="card-text small">
+                            {{ book.description|truncatechars:30 }}
+                        </p>
+
+                        <a href="{% url 'book-detail' book.id %}" 
+                           class="btn btn-primary btn-sm mt-2">
+                            View Details
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12 text-center">
+                <h5>No Books Available</h5>
+            </div>
+        {% endif %}
+
+    </div>
+</div>
+
+
+{% endblock content %}
